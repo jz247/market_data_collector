@@ -3,8 +3,7 @@
 * Inspired by [PyData Amsterdam 2018 talk by Giovanni Lanzani](https://www.youtube.com/watch?v=AcZJUQ3y2ek)
 
 ## Prerequisites
-Python version: 3.7   
-Platform: win-64    
+Python version: 3.7      
 You can set up virtual environment by using:
 ```
 > conda create --name <env-name> --file requirements.txt
