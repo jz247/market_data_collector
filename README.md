@@ -1,5 +1,5 @@
 # Websockets asynchronous postgres-timescaledb
-* Real-time time series data subscription and aggregations using WebSockets and PostgreSQL with TimescaleDB plugin
+* Real-time data subscription using WebSockets and PostgreSQL (+TimescaleDB plugin)
 * Inspired by [PyData Amsterdam 2018 talk by Giovanni Lanzani](https://www.youtube.com/watch?v=AcZJUQ3y2ek)
 
 ## Prerequisites
