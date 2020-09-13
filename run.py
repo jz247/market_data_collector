@@ -34,7 +34,18 @@ def main() -> None:
     dsn = f"postgres://postgres:{PGPASSWORD}@{PGHOST}/binancedb"
     table = f'binance_{pair}'
 
-    
+    while True:
+        pool = get_pool(dsn, asyncio.get_event_loop())
+        insert2db_async = lambda msg: insert2db(msg, 
+                                                pool=pool, 
+                                                table=table)
+        
+        asyncio.get_event_loop().run_until_complete(
+            binance_async(socket=socket, 
+                          subscribe=subscribe,
+                          insert2db=insert2db_async)
+            )
+        asyncio.get_event_loop().run_until_complete(pool.close())
 
 if __name__ == "__main__":
     main()
