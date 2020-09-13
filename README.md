@@ -1,2 +1,22 @@
-# wss_async_postgres
-Websockets asynchronous postgres-timescaledb
+# Websockets asynchronous postgres-timescaledb
+* Real-time time series data subscription and aggregations using WebSockets and PostgreSQL with TimescaleDB plugin
+* Inspired by [PyData Amsterdam 2018 talk by Giovanni Lanzani](https://www.youtube.com/watch?v=AcZJUQ3y2ek)
+
+## Prerequisites
+Python version: 3.7   
+Platform: win-64    
+You can set up virtual environment by using:
+```
+> conda create --name <env-name> --file requirements.txt
+```
+
+## Run Application
+In your command line type:
+```
+> python run.py
+```
+
+## TimescaleDB
+For further data analysis, I recommend using TimescaleDB.    
+TimescaleDB is an open-source database designed to make SQL scalable for time-series data.    
+For more please visit [TimescaleDB website](https://www.timescale.com/).
