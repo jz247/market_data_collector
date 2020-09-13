@@ -1,0 +1,5 @@
+async-timeout=3.0.1=py_1000
+asyncpg=0.21.0=py37h4ab8f01_0
+nest-asyncio=1.4.0=py_0
+psycopg2=2.8.5=py37h26f1ce3_1
+python-dotenv=0.14.0=pyh9f0ad1d_0
