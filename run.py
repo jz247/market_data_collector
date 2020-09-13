@@ -28,6 +28,13 @@ def main() -> None:
     socket = f"wss://stream.binance.com:9443/ws/{pair}@aggTrade"
     ###
 
+    PGPASSWORD = os.environ.get("PGPASSWORD")
+    PGHOST = os.environ.get("PGHOST")
+
+    dsn = f"postgres://postgres:{PGPASSWORD}@{PGHOST}/binancedb"
+    table = f'binance_{pair}'
+
+    
 
 if __name__ == "__main__":
     main()
