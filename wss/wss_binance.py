@@ -27,6 +27,7 @@ async def binance_async(*, socket, subscribe, insert2db):
         await websocket.send(subscribe)
         while True:
             message = json.loads(await websocket.recv())
+            print('Received message:', message)
             if 'e' in message:
                 msg = create_binance_msg(response=message)
                 await insert2db(msg=msg)
