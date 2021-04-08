@@ -1,6 +1,6 @@
 import json
 import websockets
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from collections import namedtuple
 from db.db_pool import logger
 import asyncpg
@@ -14,7 +14,7 @@ twelvedata_namedtuple = namedtuple(
 
 def create_twelvedata_msg(*, response: dict) -> namedtuple:
     return twelvedata_namedtuple(
-        datetime=datetime.utcfromtimestamp(response.get('timestamp')),
+        datetime=datetime.fromtimestamp(response.get('timestamp'), timezone.utc),
         symbol=response.get('symbol'),
         price=response.get('price')
     )
