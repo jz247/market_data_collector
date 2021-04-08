@@ -9,7 +9,7 @@ async def insert2db(msg: namedtuple, *, pool: Pool, schema: str=None, table: str
 #     query_create = f"CREATE TABLE IF NOT EXISTS {table}\
 # (ts timestamp, base text, quote text, event_type text, price numeric, quantity numeric, market_maker boolean)"
     query_insert = f"INSERT INTO {table} ({', '.join(fields)}) VALUES ({', '.join(placeholders)})"
-    print('Insert statement:', query_insert)
+    # print('Insert statement:', query_insert)
     async with pool.acquire() as connection:
         async with connection.transaction():
             #await connection.execute(query_create)
