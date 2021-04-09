@@ -30,10 +30,11 @@ def retry_on_errors(exc):
     else:
         return False
 
-@retry(wait_fixed=100, retry_on_exception=retry_on_errors, stop_max_attempt_number=50)
+@retry(wait_fixed=5, retry_on_exception=retry_on_errors, stop_max_attempt_number=50)
 async def insert2db_with_retry(insert2db, msg):
     try:
         await insert2db(msg=msg)
+
     except asyncpg.exceptions.UniqueViolationError as e:
         print("Catch error:", e)
         print('original msg', msg)
@@ -42,25 +43,35 @@ async def insert2db_with_retry(insert2db, msg):
         await insert2db(msg=msg)
         pass
 
+@retry(wait_fixed=5, retry_on_exception=retry_on_errors, stop_max_attempt_number=50)
 async def twelvedata_async(*, socket, subscribe, insert2db):
     async with websockets.connect(socket) as websocket:
         await websocket.send(subscribe)
         while True:
-            message = json.loads(await websocket.recv())
-            # print('Received message:', message)
-            if 'status' not in message:
-                msg = create_twelvedata_msg(response=message)
-                # print('Received values:', msg)
-                # await insert2db(msg=msg)
-                await insert2db_with_retry(insert2db, msg=msg)
-                # try:
-                #     await insert2db(msg=msg)
-                # except asyncpg.exceptions.UniqueViolationError as e:
-                #     print("Catch error:", e)
-                #     print('original msg', msg)
-                #     msg = msg._replace(datetime = msg.datetime + timedelta(microseconds=1))
-                #     print('updated msg', msg)
-                #     await insert2db(msg=msg)
-                #     pass
-            else:
-                logger.warning('Subscribe-status message')
+            try:
+                message = json.loads(await websocket.recv())
+
+            except websockets.exceptions.ConnectionClosedError as e:
+                print("Reconnecting due to catching error:", e)
+                websocket = websockets.connect(socket)
+                message = json.loads(await websocket.recv())
+                pass
+
+            finally:
+                # print('Received message:', message)
+                if 'status' not in message:
+                    msg = create_twelvedata_msg(response=message)
+                    # print('Received values:', msg)
+                    # await insert2db(msg=msg)
+                    await insert2db_with_retry(insert2db, msg=msg)
+                    # try:
+                    #     await insert2db(msg=msg)
+                    # except asyncpg.exceptions.UniqueViolationError as e:
+                    #     print("Catch error:", e)
+                    #     print('original msg', msg)
+                    #     msg = msg._replace(datetime = msg.datetime + timedelta(microseconds=1))
+                    #     print('updated msg', msg)
+                    #     await insert2db(msg=msg)
+                    #     pass
+                else:
+                    logger.warning('Subscribe-status message')
