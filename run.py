@@ -21,7 +21,6 @@ def subscribe_event(symbols):
 
 def main() -> None:
     ###
-    pair = "bnbbtc"
     CURRENCY_PAIRS = ['AUD/USD', 'CAD/USD', 'CHF/USD', 'EUR/USD', 'GBP/USD', 'NZD/USD', 'USD/AUD', 
                     'USD/CAD', 'USD/CHF', 'USD/EUR', 'USD/GBP', 'USD/JPY', 'USD/NZD', 'AUD/CAD', 'AUD/CHF', 
                     'AUD/EUR', 'AUD/GBP', 'AUD/JPY', 'AUD/NZD', 'CAD/AUD', 'CAD/CHF', 
@@ -36,17 +35,10 @@ def main() -> None:
     symbols = CURRENCY_PAIRS # ['AUD/USD', 'CAD/USD']
 
     ###
-    load_dotenv()
-    # subscribe = json.dumps({
-    # "method": "SUBSCRIBE",
-    # "params": [
-    #     f"{pair}@aggTrade",
-    #     # f"{pair}@depth"
-    # ],
-    # 'id': 1
-    # })
+    # load_dotenv()
+
     subscribe = json.dumps(subscribe_event(symbols))
-    print('subscribe:', subscribe)
+    print(datetime.datetime.utcnow(), ': Subscribe:', subscribe)
 
     ###
     # socket = f"wss://stream.binance.com:9443/ws/{pair}@aggTrade"
@@ -59,7 +51,6 @@ def main() -> None:
 
     # dsn = f"postgres://postgres:st0plessA!@localhost:5432/market_data"
     dsn = f"postgres://postgres:st0plessA!@localhost:5432/tutorial"
-    # table = f'binance_{pair}'
     table = f'ticks'
 
     while True:
