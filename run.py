@@ -4,6 +4,7 @@ import asyncio
 import nest_asyncio
 import json
 from dotenv import load_dotenv
+from datetime import datetime
 
 # from wss.wss_binance import binance_async
 from wss.wss_12data import twelvedata_async
@@ -38,7 +39,7 @@ def main() -> None:
     # load_dotenv()
 
     subscribe = json.dumps(subscribe_event(symbols))
-    print(datetime.datetime.utcnow(), ': Subscribe:', subscribe)
+    print(datetime.utcnow(), ': Subscribe:', subscribe)
 
     ###
     # socket = f"wss://stream.binance.com:9443/ws/{pair}@aggTrade"
@@ -49,8 +50,7 @@ def main() -> None:
     # PGHOST = os.environ.get("PGHOST")
     # print(PGPASSWORD, PGHOST)
 
-    # dsn = f"postgres://postgres:st0plessA!@localhost:5432/market_data"
-    dsn = f"postgres://postgres:st0plessA!@localhost:5432/tutorial"
+    dsn = f"postgres://postgres:st0plessA!@localhost:5432/market_data"
     table = f'ticks'
 
     while True:
