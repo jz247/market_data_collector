@@ -3,3 +3,9 @@
 *.pyc
 *.pyc
 wss/__pycache__/wss_12data.cpython-38.pyc
+*.pyc
+*.pyc
+db/__pycache__/db_insert.cpython-38.pyc
+wss/__pycache__/wss_12data.cpython-38.pyc
+*.pyc
+*.pyc
